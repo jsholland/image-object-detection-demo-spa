@@ -1,0 +1,159 @@
+<form class="sky-padding-even-default">
+  <sky-wait [isWaiting]="isWaiting"></sky-wait>
+  <sky-tabset>
+    <sky-tab [tabHeading]="'Upload Image'">
+        <div class="sky-margin-stacked-xl">
+          <h2>Upload an image</h2>
+          <div class="sky-padding-even-default sky-margin-stacked-default">
+            <sky-checkbox
+              name="detectObjects"
+              [(ngModel)]="detectObjects"
+            >
+              <sky-checkbox-label>
+                Detect objects for uploaded image
+              </sky-checkbox-label>
+            </sky-checkbox>
+          </div>
+
+          <div class="sky-padding-even-default sky-margin-stacked-default" style="width: 50%">
+            <sky-input-box>
+              <label class="sky-control-label" for="imageLabel">Enter image label (optional)</label>
+              <input class="sky-form-control"
+                     id="imageLabel"
+                     type="text"
+                     name="imageLabel"
+                     [(ngModel)]="imageLabel"
+              />
+            </sky-input-box>
+          </div>
+
+          <sky-file-drop
+            [acceptedTypes]="acceptedTypes"
+            [allowLinks]="true"
+            [maxFileSize]="maxFileSize"
+            (filesChanged)="fileAdded($event)"
+            (linkChanged)="linkAdded($event)"
+          >
+          </sky-file-drop>
+          <label class="sky-error-label" id="label-link-error" *ngIf="showLinkError">
+            Enter a valid image URL ending in the image file extension.
+          </label>
+        </div>
+
+      <div class="sky-margin-stacked-xl">
+        <button *ngIf="imageSaveResponse"
+          class="sky-btn sky-btn-primary"
+          (click)="flipShowImageResponseValue()"
+        >
+          {{ getShowImageResponseButtonLabel() }}
+        </button>
+        <div *ngIf="showSaveImageResponse">
+          <h2>Image save response:</h2>
+          {{ imageSaveResponse }}
+        </div>
+      </div>
+    </sky-tab>
+
+    <sky-tab [tabHeading]="'Get Image'">
+      <h2>Get an image</h2>
+      <div style="width: 50%">
+        <sky-input-box>
+          <label class="sky-control-label" for="imageId">Enter image ID</label>
+          <input class="sky-form-control"
+                 id="imageId"
+                 type="text"
+                 name="imageId"
+                 [(ngModel)]="selectedImageId"
+          />
+        </sky-input-box>
+      </div>
+      <div class="sky-margin-stacked-separate">
+        <button
+          [disabled]="!selectedImageId"
+          class="sky-btn sky-btn-primary"
+          (click)="getImage()"
+        >
+          Get image with ID
+        </button>
+      </div>
+
+      <div class="sky-margin-stacked-xl">
+        <button *ngIf="getImageResponse"
+                class="sky-btn sky-btn-primary"
+                (click)="flipShowGetImageResponseValue()"
+        >
+          {{ getImagesResponseButtonLabel() }}
+        </button>
+        <div *ngIf="showGetImageResponse">
+          <h2>getAllImages response:</h2>
+          {{ getImageResponse }}
+        </div>
+      </div>
+    </sky-tab>
+
+    <sky-tab [tabHeading]="'Get all images'">
+      <h2>Get all images</h2>
+      <div class="sky-margin-stacked-separate">
+        <button
+          class="sky-btn sky-btn-primary"
+          (click)="getAllImages()"
+        >
+          Get all images
+        </button>
+      </div>
+
+      <div class="sky-margin-stacked-xl">
+        <button *ngIf="getAllImagesResponse"
+          class="sky-btn sky-btn-primary"
+          (click)="flipShowGetAllImagesResponseValue()"
+        >
+          {{ getAllImagesResponseButtonLabel() }}
+        </button>
+        <div *ngIf="showGetAllImagesResponse">
+          <h2>getAllImages response:</h2>
+          {{ getAllImagesResponse }}
+        </div>
+      </div>
+    </sky-tab>
+
+    <sky-tab [tabHeading]="'Get images by object name'">
+      <h2>Get images by detected objects</h2>
+      <div style="width: 40%">
+        <sky-input-box>
+          <label class="sky-control-label" for="imageId">
+            Enter a comma seperated list of object names
+          </label>
+          <input class="sky-form-control"
+                 id="objects"
+                 type="text"
+                 name="objects"
+                 [(ngModel)]="objectsToQuery"
+          />
+        </sky-input-box>
+      </div>
+      <div class="sky-margin-stacked-separate">
+        <button
+          [disabled]="!objectsToQuery"
+          class="sky-btn sky-btn-primary"
+          (click)="getImagesByObjectName()"
+        >
+          Get images by identified object names
+        </button>
+      </div>
+
+      <div class="sky-margin-stacked-xl">
+        <button *ngIf="getImagesWithObjectsResponse"
+                class="sky-btn sky-btn-primary"
+                (click)="flipShowGetImagesByObjectsResponseValue()"
+        >
+          {{ getImagesByObjectResponseButtonLabel() }}
+        </button>
+        <div *ngIf="showImagesWithObjectsResponse">
+          <h2>getImagesByObjectType response:</h2>
+          {{ getImagesWithObjectsResponse }}
+        </div>
+      </div>
+    </sky-tab>
+  </sky-tabset>
+
+</form>
