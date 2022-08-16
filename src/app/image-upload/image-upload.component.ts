@@ -124,7 +124,6 @@ export class ImageUploadComponent {
 
   public setDetectObjects(detectObjects: boolean): void {
     this.detectObjects = detectObjects;
-    console.log(detectObjects);
   }
 
   private uploadImage(imageUploadRequest: ImageUploadRequest): void {
@@ -142,7 +141,6 @@ export class ImageUploadComponent {
   private buildRequestFromSelectedFile(fileDropChange: SkyFileDropChange): ImageUploadRequest {
     return new ImageUploadRequestBuilder()
       .filename(fileDropChange.files[0].file.name)
-      .label('blah')
       .base64ImageData(fileDropChange.files[0].url)
       .isLink(false)
       .detectObjects(this.detectObjects)
